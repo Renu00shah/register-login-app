@@ -4,7 +4,30 @@ import React, { useState } from "react";
 
 function App() {
   const [isSignup, setIsSignup] = useState(false);
+  const [input, setInput] = useState({
+    name:"",email:"",password:"",
+  })
+
   
+  const handleChange = (e) => {
+    setInput((oldItems) => ({
+      ...oldItems,
+              [e.target.name]: e.target.value
+    }))
+  }
+
+  const handleSubmit = (e) => { 
+    e.preventDefault();
+    console.log(input)
+  }
+
+  const resetState = () => {
+    setIsSignup(!isSignup)
+    setInput({
+      name:"",email:"",password:"",
+    })
+  }
+
   const styles = {
     main: {
       backgroundColor: "cadetblue",
@@ -20,8 +43,8 @@ function App() {
       backgroundColor: "aliceblue",
       borderRadius:'15px',
       color:"black",
-      width: '30%',
-      height: "80vh",
+      width: '25%',
+      height: "70vh",
       boxShadow:"5px 5px 10px #ccc",
                 ":hover":{
                     boxShadow:"10px 10px 20px #ccc",
@@ -55,21 +78,23 @@ function App() {
   }
   return (
     <>
+      <form onSubmit={handleSubmit}>
       <Box sx={styles.main}>
         <Box sx={styles.center}>
-          <Typography sx={styles.typo}>LOGIN</Typography>
+          <Typography sx={styles.typo}>{ isSignup ? "Signup":"Login"}</Typography>
           <Box sx={styles.text}>
-          <TextField type="text" margin="normal" id="outlined-basic" label="Name" variant="outlined" />
+            {isSignup && <TextField onChange={ handleChange} value={input.name} name="name" type="text" margin="normal"  label="Name" variant="outlined" />}
 
-          <TextField type="email" margin="normal" id="outlined-basic" label="Email" variant="outlined" />
-            <TextField type="password" margin="normal" id="outlined-basic" label="Password" variant="outlined" />
-            <Button sx={styles.btn}  variant="contained" color="warning">Login</Button>
-            <Button onClick={()=>{}} sx={styles.btn} >Change to Signup</Button>
+          <TextField onChange={ handleChange} name="email" value={input.email} type="email" margin="normal"  label="Email" variant="outlined" />
+            <TextField onChange={ handleChange} value={input.password} name="password" type="password" margin="normal"  label="Password" variant="outlined" />
+            <Button type="submit" onClick={()=> setIsSignup(!isSignup)} sx={styles.btn} variant="contained" color="warning">{isSignup ? "Signup":"Login" }</Button>
+            <Button onClick={resetState} sx={styles.btn} >Change to { isSignup ? "Login":"Signup"}</Button>
             </Box>
 
 
         </Box>
-      </Box>
+        </Box>
+        </form>
     </>
   );
 }
