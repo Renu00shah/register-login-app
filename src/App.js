@@ -43,7 +43,8 @@ function App() {
       backgroundColor: "aliceblue",
       borderRadius:'15px',
       color:"black",
-      width: '25%',
+      // width: '25%',
+      width:"350px",
       height: "70vh",
       boxShadow:"5px 5px 10px #ccc",
                 ":hover":{
